@@ -1,0 +1,3 @@
+[submodule "app/quiz_models"]
+	path = app/quiz_models
+	url = git@github.com:R0-H-1T/quiz-models.git
