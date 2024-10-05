@@ -6,8 +6,8 @@ from fastapi.security import (
 )
 from app.helper import Tags
 from typing import Annotated
-from app.auth.dependency import get_async_client
-from app.auth.models import User
+from app.dependency import get_async_client
+from app.quiz_models.auth_models import UserSchema
 import httpx
 
 router = APIRouter(tags=[Tags.auth])
@@ -17,7 +17,7 @@ prefix_url = "http://localhost:8082"
 
 @router.post("/signup")
 async def signup(
-    user: User, client: Annotated[httpx.AsyncClient, Depends(get_async_client)]
+    user: UserSchema, client: Annotated[httpx.AsyncClient, Depends(get_async_client)]
 ):
     r = await client.post(url=f"{prefix_url}/signup", json=user.model_dump())
 
