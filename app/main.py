@@ -29,5 +29,5 @@ app.include_router(
 app.include_router(
     main.router,
     prefix="/quiz-app/api/v1/analytics",
-    responses={404: {"description": "Not Found"}}
+    responses={404: {"description": "Not Found"}},
 )

@@ -15,7 +15,10 @@ from dotenv import load_dotenv
 router = APIRouter(tags=[Tags.auth])
 
 load_dotenv()
-prefix_url = f"http://{os.environ.get('AUTH_DNS')}" or f"http://localhost:{os.getenv('AUTH_PORT')}"
+prefix_url = (
+    f"http://{os.environ.get('AUTH_DNS')}"
+    or f"http://localhost:{os.getenv('AUTH_PORT')}"
+)
 
 
 @router.post("/signup")

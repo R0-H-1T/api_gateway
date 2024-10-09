@@ -11,7 +11,9 @@ from dotenv import load_dotenv
 router = APIRouter(tags=[Tags.qna])
 
 load_dotenv()
-prefix_url = f"http://{os.environ.get('QNA_DNS')}" or f"http://localhost:{os.getenv('QNA_PORT')}"
+prefix_url = (
+    f"http://{os.environ.get('QNA_DNS')}" or f"http://localhost:{os.getenv('QNA_PORT')}"
+)
 
 
 @router.post("/question", status_code=status.HTTP_201_CREATED)
