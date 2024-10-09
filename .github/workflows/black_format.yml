@@ -1,8 +1,8 @@
 name: Black Format
 
 on: 
-  push: [ main, dev ]
-
+  push: 
+    branches: [ '*' ]
 jobs:
   lint:
     runs-on: ubuntu-latest
