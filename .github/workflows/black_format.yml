@@ -1,0 +1,12 @@
+name: Black Format
+
+on: 
+  push: [ main, dev ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: psf/black@stable
+
