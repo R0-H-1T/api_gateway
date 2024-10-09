@@ -9,10 +9,13 @@ from typing import Annotated
 from app.dependency import get_async_client
 from app.quiz_models.auth_models import UserSchema
 import httpx
+import os
+from dotenv import load_dotenv
 
 router = APIRouter(tags=[Tags.auth])
 
-prefix_url = "http://localhost:8082"
+load_dotenv()
+prefix_url = f"http://{os.environ.get('AUTH_DNS')}" or f"http://localhost:{os.getenv('AUTH_PORT')}"
 
 
 @router.post("/signup")
