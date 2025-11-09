@@ -25,4 +25,9 @@ Client credentials flow
 app = FastAPI(dependencies=[Depends(get_query_token)])
 ```
 
-2. 
+**To run locally, set env**
+```
+AUTH_PORT=8081
+QNA_PORT=8082
+ANALYTICS_PORT=8083
+```

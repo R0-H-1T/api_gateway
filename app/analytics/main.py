@@ -10,10 +10,8 @@ from dotenv import load_dotenv
 router = APIRouter(tags=[Tags.analytics])
 
 load_dotenv()
-prefix_url = (
-    f"http://{os.environ.get('ANALYTICS_DNS')}"
-    or f"http://localhost:{os.getenv('ANALYTICS_PORT')}"
-)
+prefix_url = f"http://{os.environ.get('ANALYTICS_DNS')}" \
+    if os.getenv('ANALYTICS_DNS') else f"http://localhost:{os.getenv('ANALYTICS_PORT')}"
 
 
 @router.get("/qna/{qna_id}", status_code=status.HTTP_200_OK)

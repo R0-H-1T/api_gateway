@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, HTTPException, Depends
+from fastapi import APIRouter, status, HTTPException, Depends, Form
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     HTTPBearer,
@@ -27,19 +27,35 @@ async def health(client: Annotated[httpx.AsyncClient, Depends(get_async_client)]
     if r.status_code != status.HTTP_204_NO_CONTENT:
         return HTTPException(status_code=r.status_code)
 
-@router.post("/signup")
+
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(
-    user: UserSchema, client: Annotated[httpx.AsyncClient, Depends(get_async_client)]
+    username: Annotated[str, Form()],
+    email: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+    client: Annotated[httpx.AsyncClient, Depends(get_async_client)]
 ):
+    user = UserSchema(
+        username=username,
+        email=email,
+        password=password
+    )
+    print(user.model_dump())
     try:
-        r = await client.post(url=f"{prefix_url}/signup", json=user.model_dump())
+        r = await client.post(
+                url=f"{prefix_url}/signup",
+                data=user.model_dump(),
+                headers={
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+        )
     except httpx.ConnectTimeout as exc:
         raise HTTPException(status_code=503, detail='Service not available')
 
-
     print(r.status_code)
     if r.status_code != status.HTTP_201_CREATED:
-        return HTTPException(status_code=r.status_code)
+        print("did not work")
+        raise HTTPException(status_code=r.status_code)
 
     return r.json()
 
